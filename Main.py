@@ -434,13 +434,13 @@ class Iniciar_programa(QMainWindow):
                                               'returns TABLE(fecha timestamp without time zone, nom character varying, apellido1 character varying, apellido2 character varying, id_tabla character varying, tabla character varying, descripcion character varying, matricula character varying)' \
                                               'language plpgsql as $$ begin return query select  f.fechayhora,p.nombre,p.apellido1,p.apellido2,historial.id_tabla,historial.tabla,d.descripcion,m.matricula' \
                                               ' from historial inner join fecha f on f.id_fecha = historial.fecha inner join medico m on m.matricula = historial.medico ' \
-                                              'inner join descripciones d on d.id_descripcion = historial.descripciones inner join persona p on p.id_persona = m.id_persona; end; $$;'
+                                              'inner join descripciones d on d.id_descripcion = historial.descripciones inner join persona p on p.id_persona = m.id_persona order by f.fechayhora desc; end; $$;'
                                         cursor.execute(query)
                                         query='create function busq_hist1_1(character varying) ' \
                                               'returns TABLE(fecha timestamp without time zone, nom character varying, apellido1 character varying, apellido2 character varying, id_tabla character varying, tabla character varying, descripcion character varying, matricula character varying)' \
                                               'language plpgsql as $$ begin return query select  f.fechayhora,p.nombre,p.apellido1,p.apellido2,historial.id_tabla,historial.tabla,d.descripcion,m.matricula' \
                                               ' from historial inner join fecha f on f.id_fecha = historial.fecha inner join medico m on m.matricula = historial.medico inner join descripciones d on d.id_descripcion = historial.descripciones' \
-                                              ' inner join persona p on p.id_persona = m.id_persona where m.matricula=$1; end; $$;'
+                                              ' inner join persona p on p.id_persona = m.id_persona where m.matricula=$1 order by f.fechayhora desc; end; $$;'
                                         cursor.execute(query)
                                         query='create function busq_hist2(integer, integer, integer) ' \
                                               'returns TABLE(fecha timestamp without time zone, nom character varying, apellido1 character varying, apellido2 character varying, id_tabla character varying, tabla character varying, descripcion character varying, matricula character varying)' \
